@@ -14,9 +14,9 @@ export const marketingConfig: MarketingConfig = {
       title: "ブログ",
       href: "/blog",
     },
-    {
-      title: "ドキュメント",
-      href: "/docs",
-    },
+    // {
+    //   title: "ドキュメント",
+    //   href: "/docs",
+    // },
   ],
 };

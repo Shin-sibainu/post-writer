@@ -1,5 +1,48 @@
+import { allPosts } from ".contentlayer/generated";
+import { compareDesc } from "date-fns";
+import Image from "next/image";
+
 export default async function BlogPage() {
-    return (
-        <div>Hello</div>
-    )
+  const posts = allPosts
+    .filter((post) => post.published)
+    .sort((a, b) => {
+      return compareDesc(new Date(a.date), new Date(b.date));
+    });
+
+  return (
+    <div className="container max-w-4xl py-6 lg:py-10">
+      <div className="flex flex-col">
+        <div className="space-y-4">
+          <h1 className="font-extrabold text-4xl tracking-tight lg:text-5xl">
+            Blog🚀
+          </h1>
+          <p className="text-muted-foreground text-xl">
+            ContentLayerとMDXで書いています。
+          </p>
+        </div>
+      </div>
+      <hr className="my-8" />
+      <div className="grid grid-cols-2">
+        {posts?.length ? (
+          <div>
+            {posts.map((post, index) => (
+              <article key={post._id}>
+                {post.image && (
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    width={804}
+                    height={452}
+                  />
+                )}
+                <h2>{post.description && <p>{post.description}</p>}</h2>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p>記事がありません。</p>
+        )}
+      </div>
+    </div>
+  );
 }
