@@ -1,6 +1,9 @@
 import { allPosts } from ".contentlayer/generated";
 import { compareDesc } from "date-fns";
 import Image from "next/image";
+import Link from "next/link";
+
+import { formatDate } from "@/lib/utils";
 
 export default async function BlogPage() {
   const posts = allPosts
@@ -22,27 +25,40 @@ export default async function BlogPage() {
         </div>
       </div>
       <hr className="my-8" />
-      <div className="grid grid-cols-2">
-        {posts?.length ? (
-          <div>
-            {posts.map((post, index) => (
-              <article key={post._id}>
-                {post.image && (
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    width={804}
-                    height={452}
-                  />
-                )}
-                <h2>{post.description && <p>{post.description}</p>}</h2>
-              </article>
-            ))}
-          </div>
-        ) : (
-          <p>記事がありません。</p>
-        )}
-      </div>
+      {posts?.length ? (
+        <div className="grid gap-10 sm:grid-cols-2">
+          {posts.map((post, index) => (
+            <article
+              key={post._id}
+              className="relative flex flex-col space-y-2"
+            >
+              {post.image && (
+                <Image
+                  src={post.image}
+                  alt={post.title}
+                  width={804}
+                  height={452}
+                  className="rounded-md border bg-muted transition-colors"
+                />
+              )}
+              <h2 className="text-2xl font-extrabold">{post.title}</h2>
+              {post.description && (
+                <p className="text-muted-foreground">{post.description}</p>
+              )}
+              {post.date && (
+                <p className="text-sm text-muted-foreground">
+                  {formatDate(post.date)}
+                </p>
+              )}
+              <Link href={post.slug} className="absolute inset-0">
+                <span className="sr-only">記事を見る</span>
+              </Link>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p>記事がありません。</p>
+      )}
     </div>
   );
 }
