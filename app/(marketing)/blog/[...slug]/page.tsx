@@ -1,4 +1,5 @@
 import { allPosts } from "@/.contentlayer/generated";
+import { Mdx } from "@/components/mdx-components";
 import { buttonVariants } from "@/components/ui/button";
 import { cn, formatDate } from "@/lib/utils";
 import Image from "next/image";
@@ -11,7 +12,7 @@ interface PostPageProps {
   };
 }
 
-async function getPostFromParams(params) {
+async function getPostFromParams(params: any) {
   const slug = params?.slug?.join("/");
   const post = allPosts.find((post) => post.slugAsParams === slug);
 
@@ -60,6 +61,17 @@ export default async function PostPage({ params }: PostPageProps) {
           className="my-8 rounded-md border bg-muted transition-colors"
         />
       )}
+      {/* <Mdx code={post.body.code} /> */}
+      {/* <div>{post.body.code}</div> */}
+      <hr className="mt-12" />
+      <div className="flex justify-center py-6 lg:py-10">
+        <Link
+          href={"/blog"}
+          className={cn(buttonVariants({ variant: "ghost" }))}
+        >
+          全ての記事を見る
+        </Link>
+      </div>
     </article>
   );
 }

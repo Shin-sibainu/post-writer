@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils";
 import { MainNavItem } from "@/types";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
+import { useState } from "react";
+import MobileNav from "./mobile-nav";
 
 interface MainNavProps {
   items?: MainNavItem[];
@@ -12,6 +14,7 @@ interface MainNavProps {
 
 export default function MainNav({ items, children }: MainNavProps) {
   const segment = useSelectedLayoutSegment(); //active segment get
+  const [showMobileMenu, setShowMobileMenu] = useState<boolean>(true);
 
   return (
     <div className="flex gap-6 md:gap-10">
@@ -37,6 +40,15 @@ export default function MainNav({ items, children }: MainNavProps) {
           ))}
         </nav>
       ) : null}
+      <button
+        className="md:hidden flex items-center space-x-2"
+        onClick={() => setShowMobileMenu(!showMobileMenu)}
+      >
+        <span>メニュー</span>
+      </button>
+      {showMobileMenu && items && (
+        <MobileNav items={items}>{children}</MobileNav>
+      )}
     </div>
   );
 }
