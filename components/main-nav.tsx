@@ -14,7 +14,7 @@ interface MainNavProps {
 
 export default function MainNav({ items, children }: MainNavProps) {
   const segment = useSelectedLayoutSegment(); //active segment get
-  const [showMobileMenu, setShowMobileMenu] = useState<boolean>(true);
+  const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
 
   return (
     <div className="flex gap-6 md:gap-10">
