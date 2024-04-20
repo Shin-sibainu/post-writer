@@ -1,6 +1,7 @@
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { MainNavItem } from "@/types";
+import { useLockBodyScroll } from "@uidotdev/usehooks";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -10,6 +11,8 @@ interface MobileNavProps {
 }
 
 export default function MobileNav({ items, children }: MobileNavProps) {
+  useLockBodyScroll();
+
   return (
     <div
       className={cn(
