@@ -61,8 +61,7 @@ export default async function PostPage({ params }: PostPageProps) {
           className="my-8 rounded-md border bg-muted transition-colors"
         />
       )}
-      {/* <Mdx code={post.body.code} /> */}
-      {/* <div>{post.body.code}</div> */}
+      <Mdx code={post.body.code} />
       <hr className="mt-12" />
       <div className="flex justify-center py-6 lg:py-10">
         <Link

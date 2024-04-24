@@ -1,6 +1,9 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import Image from "next/image";
+import Callout from "./callout";
 
 interface MdxProps {
   code: string;
@@ -148,7 +151,7 @@ const components = {
     />
   ),
   Image,
-  // Callout,
+  Callout,
   // Card: MdxCard,
 };
 
