@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import Image from "next/image";
 import Callout from "./callout";
+import { MdxCard } from "./mdx-card";
 
 interface MdxProps {
   code: string;
@@ -135,7 +136,7 @@ const components = {
   pre: ({ className, ...props }: any) => (
     <pre
       className={cn(
-        "mb-4 mt-6 overflow-x-auto rounded-lg border bg-black py-4",
+        "mb-4 mt-6 overflow-x-auto rounded-lg border py-4 px-2 bg-black text-white",
         className
       )}
       {...props}
@@ -144,7 +145,7 @@ const components = {
   code: ({ className, ...props }: any) => (
     <code
       className={cn(
-        "relative rounded border px-[0.3rem] py-[0.2rem] font-mono text-sm",
+        "relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm",
         className
       )}
       {...props}
@@ -152,7 +153,7 @@ const components = {
   ),
   Image,
   Callout,
-  // Card: MdxCard,
+  Card: MdxCard,
 };
 
 export function Mdx({ code }: MdxProps) {
