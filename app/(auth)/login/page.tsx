@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import type { Metadata } from "next";
+import UserAuthForm from "@/components/user-auth-form";
 
 export const metadata: Metadata = {
   title: "Login",
@@ -30,7 +31,7 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* <UserAuthForm/> */}
+        <UserAuthForm />
 
         <p className="px-8 text-center text-sm text-muted-foreground">
           <Link
