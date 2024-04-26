@@ -5,6 +5,8 @@ import { cn, formatDate } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import { siteConfig } from "@/config/site";
 
 interface PostPageProps {
   params: {
@@ -21,6 +23,41 @@ async function getPostFromParams(params: any) {
   }
 
   return post;
+}
+
+export async function generateMetadata({
+  params,
+}: PostPageProps): Promise<Metadata> {
+  const page = await getPostFromParams(params);
+
+  if (!page) {
+    return {};
+  }
+
+  return {
+    title: page.title,
+    description: page.description,
+    openGraph: {
+      title: page.title,
+      description: page.description,
+      type: "article",
+      url: `${siteConfig.url}/${page.slug}`,
+      images: [
+        {
+          url: siteConfig.ogImage,
+          width: 1200,
+          height: 630,
+          alt: page.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: page.title,
+      description: page.description,
+      images: [siteConfig.ogImage],
+    },
+  };
 }
 
 export default async function PostPage({ params }: PostPageProps) {
