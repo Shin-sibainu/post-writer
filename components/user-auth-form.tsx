@@ -1,10 +1,20 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userAuthSchema } from "@/lib/validations/auth";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
+import { z } from "zod";
+import { useState } from "react";
+import { Icons } from "./icon";
+import { toast } from "./ui/use-toast";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+
+type FormData = z.infer<typeof userAuthSchema>;
 
 export default function UserAuthForm({
   className,
@@ -14,7 +24,19 @@ export default function UserAuthForm({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(userAuthSchema) });
+  } = useForm<FormData>({ resolver: zodResolver(userAuthSchema) });
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isGitHubLoading, setIsGitHubLoading] = useState<boolean>(false);
+
+  async function onSubmit(data: FormData) {
+    setIsLoading(true);
+
+    return toast({
+      title: "メールアドレスを確認してください。",
+      description: "ログインリンクを送りました。",
+    });
+  }
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
@@ -61,7 +83,7 @@ export default function UserAuthForm({
         className={cn(buttonVariants({ variant: "outline" }))}
         onClick={() => {
           setIsGitHubLoading(true);
-          signIn("github");
+          // signIn("github");
         }}
         disabled={isLoading || isGitHubLoading}
       >
