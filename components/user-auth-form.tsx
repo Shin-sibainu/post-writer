@@ -11,6 +11,7 @@ import { z } from "zod";
 import { useState } from "react";
 import { Icons } from "./icon";
 import { toast } from "./ui/use-toast";
+import { signIn } from "next-auth/react";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -83,7 +84,7 @@ export default function UserAuthForm({
         className={cn(buttonVariants({ variant: "outline" }))}
         onClick={() => {
           setIsGitHubLoading(true);
-          // signIn("github");
+          signIn("github");
         }}
         disabled={isLoading || isGitHubLoading}
       >
