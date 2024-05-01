@@ -1,5 +1,6 @@
 import DashboardHeader from "@/components/dashboard-header";
 import DashboardShell from "@/components/dashboard-shell";
+import EmptyPlaceholder from "@/components/empty-placeholer";
 import PostCreateButton from "@/components/post-create-button";
 import PostItem from "@/components/post-item";
 import { authOptions } from "@/lib/auth";
@@ -42,9 +43,10 @@ export default async function DashboardPage() {
             ))}
           </div>
         ) : (
-          <div>
-            <div></div>
-          </div>
+          <EmptyPlaceholder>
+            <div>No posts created</div>
+            <PostCreateButton variant="outline" />
+          </EmptyPlaceholder>
         )}
       </div>
     </DashboardShell>
