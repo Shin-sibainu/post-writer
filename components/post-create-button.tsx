@@ -5,6 +5,7 @@ import { ButtonProps, buttonVariants } from "./ui/button";
 import { useState } from "react";
 import { Icons } from "./icon";
 import { useRouter } from "next/navigation";
+import { toast } from "./ui/use-toast";
 
 interface PostCreateButtonProps extends ButtonProps {}
 
@@ -30,6 +31,22 @@ export default function PostCreateButton({
     });
 
     setIsLoading(false);
+
+    if (!response.ok) {
+      if (response.status === 402) {
+        return toast({
+          title: "Limit of 3 posts reached.",
+          description: "Please upgrade to the PRO plan.",
+          variant: "destructive",
+        });
+      }
+
+      return toast({
+        title: "Something went wrong.",
+        description: "Your post was not created. Please try again.",
+        variant: "destructive",
+      });
+    }
 
     const post = await response.json();
 
