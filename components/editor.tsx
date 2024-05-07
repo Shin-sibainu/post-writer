@@ -12,7 +12,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { postPatchSchema } from "@/lib/validations/post";
 import { z } from "zod";
 import EditorJS from "@editorjs/editorjs";
-import { toast } from "./ui/use-toast";
+import { useToast } from "./ui/use-toast";
+import { useRouter } from "next/navigation";
 
 interface EditorProps {
   post: Pick<Post, "id" | "title" | "content" | "published">;
@@ -24,6 +25,9 @@ export default function Editor({ post }: EditorProps) {
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const ref = useRef<EditorJS>();
+
+  const router = useRouter();
+  const { toast } = useToast();
 
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import("@editorjs/editorjs")).default;
@@ -107,9 +111,15 @@ export default function Editor({ post }: EditorProps) {
       });
     }
 
-    if (!isMounted) {
-      return null;
-    }
+    router.refresh();
+
+    return toast({
+      description: "正常に保存されました🚀",
+    });
+  }
+
+  if (!isMounted) {
+    return null;
   }
 
   return (
