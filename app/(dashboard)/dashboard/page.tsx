@@ -44,7 +44,13 @@ export default async function DashboardPage() {
           </div>
         ) : (
           <EmptyPlaceholder>
-            <div>No posts created</div>
+            <EmptyPlaceholder.Icon name="post" />
+            <EmptyPlaceholder.Title>
+              記事が投稿されていません。
+            </EmptyPlaceholder.Title>
+            <EmptyPlaceholder.Description>
+              記事を作成してください。
+            </EmptyPlaceholder.Description>
             <PostCreateButton variant="outline" />
           </EmptyPlaceholder>
         )}
