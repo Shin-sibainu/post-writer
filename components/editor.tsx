@@ -30,7 +30,6 @@ export default function Editor({ post }: EditorProps) {
   const { toast } = useToast();
 
   const initializeEditor = useCallback(async () => {
-    const EditorJS = (await import("@editorjs/editorjs")).default;
     const Header = (await import("@editorjs/header")).default;
     const Embed = (await import("@editorjs/embed")).default;
     const Table = (await import("@editorjs/table")).default;
