@@ -1,40 +1,84 @@
 "use client";
 
 import {
+  DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
-import { DropdownMenu } from "./ui/dropdown-menu";
+} from "./ui/dropdown-menu";
 import { Icons } from "./icon";
 import Link from "next/link";
 import { Post } from "@prisma/client";
+import {
+  AlertDialogContent,
+  AlertDialog,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "./ui/alert-dialog";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface PostOperationsProps {
   post: Pick<Post, "id" | "title">;
 }
 
 export default function PostOperations({ post }: PostOperationsProps) {
+  const router = useRouter();
+  const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
+
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md border transition-colors hover:bg-muted">
+        <DropdownMenuTrigger>
           <Icons.ellipsis className="h-4 w-4" />
-          <span className="sr-only">開く</span>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
+        <DropdownMenuContent>
           <DropdownMenuItem>
-            <Link href={`/editor/${post.id}`} className="flex w-full">
+            <Link href={`/editor/${post.id}`} className="w-full">
               編集
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="flex cursor-pointer items-center text-destructive focus:text-destructive">
+          <DropdownMenuItem
+            onClick={() => setShowDeleteAlert(true)}
+            className="text-destructive cursor-pointer focus:text-destructive"
+          >
             削除
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>本当にこの記事を削除しますか？</AlertDialogTitle>
+            <AlertDialogDescription>
+              この操作は取り返しができません。
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>キャンセル</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={async (event) => {
+                event.preventDefault();
+                setIsDeleteLoading(true);
+              }}
+            >
+              {isDeleteLoading ? (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Icons.trash className="mr-2 h-4 w-4" />
+              )}
+              <span>削除</span>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }
