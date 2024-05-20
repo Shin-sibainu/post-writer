@@ -1,5 +1,5 @@
-// import { createContentlayerPlugin } from "next-contentlayer"
-const { createContentlayerPlugin } = require("next-contentlayer");
+import { createContentlayerPlugin } from "next-contentlayer";
+// const { createContentlayerPlugin } = require("next-contentlayer");
 
 // import "./env.mjs"
 import("./env.mjs");
@@ -15,4 +15,4 @@ const withContentlayer = createContentlayerPlugin({
 });
 
 // export default withContentlayer(nextConfig)
-module.exports = withContentlayer(nextConfig);
+export default withContentlayer(nextConfig);
