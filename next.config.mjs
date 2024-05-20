@@ -1,8 +1,8 @@
 import { createContentlayerPlugin } from "next-contentlayer";
 // const { createContentlayerPlugin } = require("next-contentlayer");
 
-// import "./env.mjs"
-import("./env.mjs");
+import "./env.mjs";
+// import("./env.mjs");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
