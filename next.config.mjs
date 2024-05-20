@@ -1,8 +1,5 @@
 import { createContentlayerPlugin } from "next-contentlayer";
-// const { createContentlayerPlugin } = require("next-contentlayer");
-
 import "./env.mjs";
-// import("./env.mjs");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -10,9 +7,6 @@ const nextConfig = {
   swcMinify: true,
 };
 
-const withContentlayer = createContentlayerPlugin({
-  // Additional Contentlayer config options
-});
+const withContentlayer = createContentlayerPlugin({});
 
-// export default withContentlayer(nextConfig)
 export default withContentlayer(nextConfig);
